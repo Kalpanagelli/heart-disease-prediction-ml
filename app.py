@@ -12,7 +12,7 @@ st.write("Enter patient details to predict heart disease risk.")
 
 # ---- Load pipeline using relative path ----
 BASE_DIR = os.path.dirname(__file__)
-pipeline_path = os.path.join(BASE_DIR, "models", "logistic_pipeline.pkl")
+pipeline_path = os.path.join(BASE_DIR, "logistic_pipeline.pkl")
 pipeline = joblib.load(pipeline_path)
 
 # Set threshold
