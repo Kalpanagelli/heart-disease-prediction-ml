@@ -42,9 +42,9 @@ chest_pain = st.selectbox(
     "Chest Pain Type",
     [1, 2, 3, 4],
     help="Type of chest discomfort experienced (1–4 categories based on medical classification). \n"
-         "1 = Typical Angina (heart-related pain)\n"
-         "2 = Atypical Angina(Chest pain that is somewhat heart-related but doesn’t follow the classic angina pattern.)\n"
-         "3 = Non-anginal Pain (not heart related)\n"
+         "1 = Typical Angina (heart-related pain), \n"
+         "2 = Atypical Angina(Chest pain that is somewhat heart-related but doesn’t follow the classic angina pattern.), \n"
+         "3 = Non-anginal Pain (not heart related), \n"
          "4 = Asymptomatic (no chest pain)"
 )
 
@@ -92,8 +92,8 @@ ekg = st.selectbox(
     "EKG Results",
     [0, 1, 2],
     help="Electrocardiogram test result showing heart electrical activity.\n"
-         "0 = Normal\n"
-         "1 = ST-T abnormality\n"
+         "0 = Normal, \n"
+         "1 = ST-T abnormality, \n"
          "2 = Left ventricular hypertrophy"
 )
 
@@ -108,8 +108,8 @@ slope = st.selectbox(
     "Slope of ST Segment",
     [1, 2, 3],
     help= "Pattern of the ST segment during peak exercise (used in heart diagnosis).\n"
-         "1 = Upsloping\n"
-         "2 = Flat\n"
+         "1 = Upsloping, \n"
+         "2 = Flat,\n"
          "3 = Downsloping"
 )
 
@@ -123,8 +123,8 @@ thallium = st.selectbox (
     "Thallium Stress Test Result",
     [3, 6, 7],
     help= "Result of a nuclear stress test that checks blood flow to heart muscles.\n"
-         "3 = Normal\n"
-         "6 = Fixed Defect (no blood flow in some part)\n"
+         "3 = Normal, \n"
+         "6 = Fixed Defect (no blood flow in some part), \n"
          "7 = Reversible Defect (reduced blood flow during exercise)"
 )
 
