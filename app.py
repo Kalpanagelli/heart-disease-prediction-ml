@@ -6,6 +6,39 @@ import numpy as np
 import os
 
 # -------------------------------
+# Custom CSS to remove gaps
+# -------------------------------
+st.markdown("""
+<style>
+    /* Remove gap between markdown and caption */
+    .stMarkdown {
+        margin-bottom: 0px !important;
+    }
+    
+    /* Remove gap between caption and input elements */
+    .stCaption {
+        margin-bottom: -15px !important;
+        margin-top: -15px !important;
+    }
+    
+    /* Adjust spacing for number inputs, select boxes, and radio buttons */
+    .stNumberInput, .stSelectbox, .stRadio {
+        margin-top: -20px !important;
+    }
+    
+    /* Additional adjustments for consistent spacing */
+    div[data-testid="stVerticalBlock"] > div {
+        gap: 0rem;
+    }
+    
+    /* Reduce the top padding of input labels */
+    .stNumberInput > label, .stSelectbox > label, .stRadio > label {
+        margin-bottom: 0px !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# -------------------------------
 # Page Title
 # -------------------------------
 
@@ -21,7 +54,6 @@ pipeline_path = os.path.join(BASE_DIR, "logistic_pipeline.pkl")
 pipeline = joblib.load(pipeline_path)
 
 THRESHOLD = 0.5
-
 
 # -------------------------------
 # USER INPUT SECTION
@@ -92,7 +124,6 @@ max_hr = st.number_input("", min_value=60, max_value=250, value=150, key="hr")
 # Exercise Angina
 st.markdown("**Exercise Induced Angina**")
 st.caption("Chest pain triggered by physical activity")
-
 exercise_angina = st.radio("", ["No","Yes"], key="angina")
 exercise_angina = 1 if exercise_angina == "Yes" else 0
 
