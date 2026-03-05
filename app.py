@@ -177,6 +177,8 @@ if st.button("Predict Heart Disease Risk"):
 
     st.write(f"Risk Score: {prob:.2f}")
 
+    st.metric("Heart Disease Risk", f"{prob*100:.1f}%")
+
     st.progress(prob)
 
     # Risk interpretation
@@ -199,10 +201,10 @@ st.subheader("About This Model")
 
 st.write("""
 Model: Logistic Regression  
-Dataset: UCI Heart Disease Dataset  
+Dataset: kaggle Heart Disease Dataset  
 Features Used: 13 clinical variables  
 Evaluation Metric: ROC-AUC  
-AUC Score: ~0.89  
+AUC Score: 0.90  
 
 This machine learning model estimates the probability of heart disease
 based on patient clinical measurements.
