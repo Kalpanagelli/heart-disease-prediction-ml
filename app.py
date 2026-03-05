@@ -11,6 +11,7 @@ st.write("Enter patient details to predict heart disease risk.")
 
 
 # ---- Load pipeline using relative path ----
+
 BASE_DIR = os.path.dirname(__file__)
 pipeline_path = os.path.join(BASE_DIR, "logistic_pipeline.pkl")
 pipeline = joblib.load(pipeline_path)
@@ -23,6 +24,9 @@ THRESHOLD = 0.5  # selected threshold
 # User Inputs
 # ---------------------------------------------------
 
+
+st.markdown("**Age (years)**")
+st.caption("Patient age in years (Example: 45)")
 age = st.number_input(
     "Age (years)",
     min_value=1,
@@ -45,7 +49,7 @@ chest_pain = st.selectbox(
          "1 = Typical Angina (heart-related pain), \n"
          "2 = Atypical Angina(Chest pain that is somewhat heart-related but doesn’t follow the classic angina pattern.), \n"
          "3 = Non-anginal Pain (not heart related), \n"
-         "4 = Asymptomatic (no chest pain)"
+         "4 = Asymptomatic (no chest pain)."
 )
 
 bp = st.number_input(
@@ -94,7 +98,7 @@ ekg = st.selectbox(
     help="Electrocardiogram test result showing heart electrical activity.\n"
          "0 = Normal, \n"
          "1 = ST-T abnormality, \n"
-         "2 = Left ventricular hypertrophy"
+         "2 = Left ventricular hypertrophy."
 )
 
 exercise_angina = st.radio(
@@ -109,8 +113,8 @@ slope = st.selectbox(
     [1, 2, 3],
     help= "Pattern of the ST segment during peak exercise (used in heart diagnosis).\n"
          "1 = Upsloping, \n"
-         "2 = Flat,\n"
-         "3 = Downsloping"
+         "2 = Flat, \n"
+         "3 = Downsloping."
 )
 
 vessels = st.selectbox(
