@@ -5,136 +5,132 @@ import joblib
 import numpy as np
 import os
 
-# ------------------------------
-# Page Configuration
-# ------------------------------
-st.set_page_config(page_title="Heart Disease Prediction", layout="centered")
+# -------------------------------
+# Page Title
+# -------------------------------
 
-st.title("❤️ Heart Disease Prediction Tool")
-st.write("Enter patient clinical details to estimate the likelihood of heart disease.")
+st.title("Heart Disease Prediction Tool")
+st.write("Enter patient clinical information to estimate heart disease risk.")
 
-# ------------------------------
+# -------------------------------
 # Load Model
-# ------------------------------
+# -------------------------------
+
 BASE_DIR = os.path.dirname(__file__)
 pipeline_path = os.path.join(BASE_DIR, "logistic_pipeline.pkl")
 pipeline = joblib.load(pipeline_path)
 
 THRESHOLD = 0.5
 
-# ------------------------------
-# Input Layout (2 Columns)
-# ------------------------------
-col1, col2 = st.columns(2)
 
-with col1:
+# -------------------------------
+# USER INPUT SECTION
+# -------------------------------
 
-    age = st.number_input(
-        "Age (years)",
-        min_value=1,
-        max_value=120,
-        value=50
-    )
-    st.caption("Age of the patient in years. Example: 45")
+st.header("Patient Information")
 
-    sex = st.selectbox(
-        "Sex",
-        ["Female", "Male"]
-    )
-    st.caption("Biological sex of the patient.")
+# Age
+st.markdown("**Age of patient**")
+st.caption("Patient age in years (Example: 45)")
+age = st.number_input("", min_value=1, max_value=120, value=50, key="age")
 
-    chest_pain = st.selectbox(
-        "Chest Pain Type (1–4)",
-        [1,2,3,4]
-    )
-    st.caption("1=Typical angina, 2=Atypical angina, 3=Non-anginal pain, 4=Asymptomatic")
-
-    bp = st.number_input(
-        "Resting Blood Pressure (mm Hg)",
-        min_value=50,
-        max_value=250,
-        value=120
-    )
-    st.caption("Blood pressure measured while resting. Example: 120")
-
-    chol = st.number_input(
-        "Cholesterol (mg/dL)",
-        min_value=0,
-        max_value=600,
-        value=200
-    )
-    st.caption("Total cholesterol level in blood.")
-
-with col2:
-
-    fbs = st.radio(
-        "Fasting Blood Sugar > 120 mg/dL",
-        ["No", "Yes"]
-    )
-    st.caption("Indicates whether fasting blood sugar exceeds 120 mg/dL.")
-
-    ekg = st.selectbox(
-        "Resting ECG Results (0–2)",
-        [0,1,2]
-    )
-    st.caption("Electrocardiogram results measuring heart electrical activity.")
-
-    max_hr = st.number_input(
-        "Maximum Heart Rate Achieved",
-        min_value=60,
-        max_value=250,
-        value=150
-    )
-    st.caption("Highest heart rate achieved during exercise testing.")
-
-    exercise_angina = st.radio(
-        "Exercise-Induced Angina",
-        ["No","Yes"]
-    )
-    st.caption("Chest pain triggered by physical activity.")
-
-    st_depression = st.number_input(
-        "ST Depression",
-        min_value=0.0,
-        max_value=10.0,
-        value=1.0,
-        step=0.1
-    )
-    st.caption("ECG measurement indicating reduced blood flow during exercise.")
-
-# ------------------------------
-# Additional Inputs
-# ------------------------------
-
-slope = st.selectbox(
-    "Slope of ST Segment (1–3)",
-    [1,2,3]
-)
-st.caption("1=Upsloping, 2=Flat, 3=Downsloping ST segment during peak exercise.")
-
-vessels = st.selectbox(
-    "Number of Major Vessels (0–3)",
-    [0,1,2,3]
-)
-st.caption("Number of major vessels visible in fluoroscopy imaging.")
-
-thallium = st.selectbox(
-    "Thallium Stress Test Result",
-    [3,6,7]
-)
-st.caption("3=Normal, 6=Fixed defect, 7=Reversible defect.")
-
-# ------------------------------
-# Convert Inputs
-# ------------------------------
+# Sex
+st.markdown("**Sex**")
+st.caption("Biological sex of the patient")
+sex = st.selectbox("", ["Female", "Male"], key="sex")
 sex = 1 if sex == "Male" else 0
+
+# Chest Pain
+st.markdown("**Chest Pain Type (1–4)**")
+st.caption("""
+1 = Typical angina  
+2 = Atypical angina  
+3 = Non-anginal pain  
+4 = Asymptomatic
+""")
+chest_pain = st.selectbox("", [1,2,3,4], key="cp")
+
+# Blood Pressure
+st.markdown("**Resting Blood Pressure (mm Hg)**")
+st.caption("Blood pressure measured at rest (Example: 120)")
+bp = st.number_input("", min_value=50, max_value=250, value=120, key="bp")
+
+# Cholesterol
+TRAIN_MIN_CHOL = 126
+TRAIN_MAX_CHOL = 564
+
+st.markdown("**Cholesterol (mg/dL)**")
+st.caption("Total cholesterol level in blood (Example: 200)")
+chol = st.number_input("", min_value=0, max_value=600, value=200, key="chol")
+
+if chol < TRAIN_MIN_CHOL or chol > TRAIN_MAX_CHOL:
+    st.warning(
+        f"⚠️ Cholesterol is outside the training data range "
+        f"({TRAIN_MIN_CHOL}-{TRAIN_MAX_CHOL}). Prediction reliability may decrease."
+    )
+
+# Fasting Blood Sugar
+st.markdown("**Fasting Blood Sugar > 120 mg/dL**")
+st.caption("Indicates if fasting blood sugar is above 120 mg/dL")
+fbs = st.radio("", ["No", "Yes"], key="fbs")
 fbs = 1 if fbs == "Yes" else 0
+
+# EKG
+st.markdown("**Resting ECG Results**")
+st.caption("""
+0 = Normal  
+1 = ST-T wave abnormality  
+2 = Left ventricular hypertrophy
+""")
+ekg = st.selectbox("", [0,1,2], key="ekg")
+
+# Max Heart Rate
+st.markdown("**Maximum Heart Rate Achieved**")
+st.caption("Highest heart rate achieved during exercise test (Example: 150)")
+max_hr = st.number_input("", min_value=60, max_value=250, value=150, key="hr")
+
+# Exercise Angina
+st.markdown("**Exercise Induced Angina**")
+st.caption("Chest pain triggered by physical activity")
+
+exercise_angina = st.radio("", ["No","Yes"], key="angina")
 exercise_angina = 1 if exercise_angina == "Yes" else 0
 
-# ------------------------------
-# Predict Button
-# ------------------------------
-if st.button("🔍 Predict Heart Disease Risk"):
+# ST Depression
+st.markdown("**ST Depression**")
+st.caption("ST depression induced by exercise relative to rest (Example: 1.0)")
+st_depression = st.number_input("", min_value=0.0, max_value=10.0, value=1.0, step=0.1, key="st")
+
+# Slope
+st.markdown("**Slope of Peak Exercise ST Segment**")
+st.caption("""
+1 = Upsloping  
+2 = Flat  
+3 = Downsloping
+""")
+slope = st.selectbox("", [1,2,3], key="slope")
+
+# Vessels
+st.markdown("**Number of Major Vessels Colored by Fluoroscopy**")
+st.caption("Number of major blood vessels detected in imaging (0–3)")
+vessels = st.selectbox("", [0,1,2,3], key="vessels")
+
+# Thallium
+st.markdown("**Thallium Stress Test Result**")
+st.caption("""
+3 = Normal  
+6 = Fixed defect  
+7 = Reversible defect
+""")
+thallium = st.selectbox("", [3,6,7], key="thal")
+
+# -------------------------------
+# PREDICT BUTTON
+# -------------------------------
+
+st.markdown("---")
+
+if st.button("Predict Heart Disease Risk"):
 
     features = np.array([[age, sex, chest_pain, bp, chol, fbs, ekg,
                           max_hr, exercise_angina, st_depression,
@@ -146,27 +142,37 @@ if st.button("🔍 Predict Heart Disease Risk"):
 
     st.subheader("Prediction Result")
 
-    if prob >= THRESHOLD:
-        st.error(prediction)
-    else:
-        st.success(prediction)
+    st.write(prediction)
 
-    st.write(f"**Probability of Heart Disease:** {prob:.2f}")
+    st.write(f"Risk Score: {prob:.2f}")
 
-    # ------------------------------
-    # Confidence Interpretation
-    # ------------------------------
+    st.progress(prob)
+
+    # Risk interpretation
     if prob < 0.30:
-        st.info("Low predicted risk")
+        st.success("Low Risk")
     elif prob < 0.60:
-        st.warning("Moderate predicted risk")
+        st.warning("Moderate Risk")
     else:
-        st.error("High predicted risk")
+        st.error("High Risk")
 
-# ------------------------------
-# Disclaimer
-# ------------------------------
-st.divider()
-st.caption(
-"This tool is for educational purposes only and should not be used as a medical diagnosis."
-)
+    st.warning("⚠️ This tool is for educational purposes only and not a medical diagnosis.")
+
+# -------------------------------
+# MODEL INFORMATION
+# -------------------------------
+
+st.markdown("---")
+
+st.subheader("About This Model")
+
+st.write("""
+Model: Logistic Regression  
+Dataset: UCI Heart Disease Dataset  
+Features Used: 13 clinical variables  
+Evaluation Metric: ROC-AUC  
+AUC Score: ~0.89  
+
+This machine learning model estimates the probability of heart disease
+based on patient clinical measurements.
+""")
