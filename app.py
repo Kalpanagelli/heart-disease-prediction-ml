@@ -63,7 +63,7 @@ st.header("Patient Information")
 
 # Age
 st.markdown("**Age of patient**")
-st.caption("Patient age in years (Example: 45)")
+st.caption("Patient age in years")
 age = st.number_input("", min_value=1, max_value=120, value=50, key="age")
 
 # Sex
@@ -73,9 +73,9 @@ sex = st.selectbox("", ["Female", "Male"], key="sex")
 sex = 1 if sex == "Male" else 0
 
 # Chest Pain
-st.markdown("**Chest Pain Type (1–4)**")
+st.markdown("**Chest Pain Type (1–4 categories based on medical classification)**")
 st.caption("""
-1 = Typical angina  
+1 = Typical angina
 2 = Atypical angina  
 3 = Non-anginal pain  
 4 = Asymptomatic
@@ -84,7 +84,7 @@ chest_pain = st.selectbox("", [1,2,3,4], key="cp")
 
 # Blood Pressure
 st.markdown("**Resting Blood Pressure (mm Hg)**")
-st.caption("Blood pressure measured at rest (Example: 120)")
+st.caption("Blood pressure measured at rest")
 bp = st.number_input("", min_value=50, max_value=250, value=120, key="bp")
 
 # Cholesterol
@@ -92,7 +92,7 @@ TRAIN_MIN_CHOL = 126
 TRAIN_MAX_CHOL = 564
 
 st.markdown("**Cholesterol (mg/dL)**")
-st.caption("Total cholesterol level in blood (Example: 200)")
+st.caption("Total cholesterol level in blood")
 chol = st.number_input("", min_value=0, max_value=600, value=200, key="chol")
 
 if chol < TRAIN_MIN_CHOL or chol > TRAIN_MAX_CHOL:
@@ -103,7 +103,7 @@ if chol < TRAIN_MIN_CHOL or chol > TRAIN_MAX_CHOL:
 
 # Fasting Blood Sugar
 st.markdown("**Fasting Blood Sugar > 120 mg/dL**")
-st.caption("Indicates if fasting blood sugar is above 120 mg/dL")
+st.caption("Measured after fasting for 8 hours. >120 mg/dL may indicate elevated risk.")
 fbs = st.radio("", ["No", "Yes"], key="fbs")
 fbs = 1 if fbs == "Yes" else 0
 
@@ -118,7 +118,7 @@ ekg = st.selectbox("", [0,1,2], key="ekg")
 
 # Max Heart Rate
 st.markdown("**Maximum Heart Rate Achieved**")
-st.caption("Highest heart rate achieved during exercise test (Example: 150)")
+st.caption("Highest heart rate achieved during exercise test")
 max_hr = st.number_input("", min_value=60, max_value=250, value=150, key="hr")
 
 # Exercise Angina
@@ -129,7 +129,7 @@ exercise_angina = 1 if exercise_angina == "Yes" else 0
 
 # ST Depression
 st.markdown("**ST Depression**")
-st.caption("ST depression induced by exercise relative to rest (Example: 1.0)")
+st.caption("ST depression induced by exercise relative to rest. Higher values may indicate reduced blood flow to heart.")
 st_depression = st.number_input("", min_value=0.0, max_value=10.0, value=1.0, step=0.1, key="st")
 
 # Slope
