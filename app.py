@@ -25,10 +25,10 @@ THRESHOLD = 0.5  # selected threshold
 # ---------------------------------------------------
 
 
-st.markdown("**Age (years)**")
+st.markdown("**Age**")
 st.caption("Patient age in years (Example: 45)")
 age = st.number_input(
-    "Age (years)",
+    "",
     min_value=1,
     max_value=120,
     value=50,
