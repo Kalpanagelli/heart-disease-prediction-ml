@@ -69,7 +69,7 @@ pip install -r requirements.txt
 
 **4. Run the Streamlit app**
 
-python -m streamlit run app.py
+python3 -m streamlit run app.py
 
 **5. **Key Skills Demonstrated** **
 
